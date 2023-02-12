@@ -7,7 +7,7 @@ import (
 	"github.com/sclevine/spec/report"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/duggavo/go-monero/pkg/levin"
+	"github.com/duggavo/go-monero/levin"
 )
 
 func TestLevin(t *testing.T) {
