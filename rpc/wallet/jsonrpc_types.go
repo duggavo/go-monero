@@ -7,16 +7,16 @@ type GetAccountsRequestParameters struct {
 
 type GetAccountsResult struct {
 	SubaddressAccounts []struct {
-		AccountIndex    uint   `json:"account_index"`
-		Balance         uint64 `json:"balance"`
-		BaseAddress     string `json:"base_address"`
-		Label           string `json:"label"`
+		AccountIndex    uint   `json:"account_index"` // Index of the account.
+		Balance         uint64 `json:"balance"`       // Balance for the account (locked + unlocked).
+		BaseAddress     string `json:"base_address"`  // Main address of the account.
+		Label           string `json:"label"`         // Label of the account.
 		Tag             string `json:"tag"`
-		UnlockedBalance uint64 `json:"unlocked_balance"`
+		UnlockedBalance uint64 `json:"unlocked_balance"` // Balance which can be spent.
 	} `json:"subaddress_accounts"`
 
-	TotalBalance         uint64 `json:"total_balance"`
-	TotalUnlockedBalance uint64 `json:"total_unlocked_balance"`
+	TotalBalance         uint64 `json:"total_balance"`          // Total balance of the wallet (locked + unlocked)
+	TotalUnlockedBalance uint64 `json:"total_unlocked_balance"` // Total balance which can be spent.
 }
 
 type GetAddressRequestParameters struct {
@@ -42,72 +42,24 @@ type GetBalanceRequestParameters struct {
 }
 
 type GetBalanceResult struct {
-	// Balance is the total balance of the current monero-wallet-rpc in
-	// session.
-	//
-	Balance uint64 `json:"balance"`
-
-	// BlocksToUnlock indicates how many blocks are necessary for all the
-	// funds to be unclocked.
-	//
-	BlocksToUnlock uint `json:"blocks_to_unlock"`
-
-	// MultisigImportNeeded is True if importing multisig data is needed
-	// for returning a correct balance
-	//
-	MultisigImportNeeded bool `json:"multisig_import_needed"`
-
-	// PerSubaddress is an array of subaddress information; Balance
-	// information for each subaddress in an account.
-	//
-	PerSubaddress []SubAddress `json:"per_subaddress"`
-
-	// TimeToUnlock TODO
-	//
-	TimeToUnlock int `json:"time_to_unlock"`
-
-	// UnlockedBalance TODO
-	//
-	UnlockedBalance int64 `json:"unlocked_balance"`
+	Balance              uint64       `json:"balance"`                // Balance of the wallet (locked + unlocked).
+	MultisigImportNeeded bool         `json:"multisig_import_needed"` // True if importing multisig data is needed for returning a correct balance
+	PerSubaddress        []SubAddress `json:"per_subaddress"`         // Balance information for each subaddress.
+	TimeToUnlock         int          `json:"time_to_unlock"`         // Time (in seconds) before balance is safe to spend.
+	BlocksToUnlock       uint         `json:"blocks_to_unlock"`       // Number of blocks before balance is safe to spend.
+	UnlockedBalance      int64        `json:"unlocked_balance"`       // Balance which can be spent.
 }
 
 type SubAddress struct {
-	// AccountIndex is the index of the account.
-	//
-	AccountIndex uint `json:"account_index"`
-
-	// Address at this index. Base58 representation of the public
-	// keys.
-	//
-	Address string `json:"address"`
-
-	// AddressIndex  is the index of the subaddress in the account.
-	//
-	AddressIndex uint `json:"address_index"`
-
-	// Balance is the balance for the subaddress.
-	//
-	Balance uint64 `json:"balance"`
-
-	// BlocksToUnlock TODO
-	//
-	BlocksToUnlock uint `json:"blocks_to_unlock"`
-
-	// Label TODO
-	//
-	Label string `json:"label"`
-
-	// NumUnspentOutputs TODO
-	//
-	NumUnspentOutputs uint `json:"num_unspent_outputs"`
-
-	// TimeToUnlock TODO
-	//
-	TimeToUnlock uint `json:"time_to_unlock"`
-
-	// UnlockedBalance TODO
-	//
-	UnlockedBalance int64 `json:"unlocked_balance"`
+	AccountIndex      uint   `json:"account_index"`       // Index of the account.
+	Address           string `json:"address"`             // Textual representation of the subaddress.
+	AddressIndex      uint   `json:"address_index"`       // Index of the subaddress in the account
+	Balance           uint64 `json:"balance"`             // Balance for the subaddress (locked + unlocked).
+	Label             string `json:"label"`               // Label of the subaddress.
+	NumUnspentOutputs uint   `json:"num_unspent_outputs"` // Number of unspent outputs available for the subaddress.
+	TimeToUnlock      uint   `json:"time_to_unlock"`      // Time (in seconds) before balance is safe to spend.
+	BlocksToUnlock    uint   `json:"blocks_to_unlock"`    // Number of blocks before balance is safe to spend.
+	UnlockedBalance   int64  `json:"unlocked_balance"`    // Balance which can be spent.
 }
 
 type CreateAddressResult struct {
@@ -158,17 +110,17 @@ type TransferResult struct {
 }
 
 type SubaddrIndices struct {
-	Major uint `json:"major"`
-	Minor uint `json:"minor"`
+	Major uint `json:"major"` // Account index for the subaddress.
+	Minor uint `json:"minor"` // Index of the subaddress in the account.
 }
 type Transfer struct {
-	Amount       uint64         `json:"amount"`
-	KeyImage     string         `json:"key_image"`
-	Spent        bool           `json:"spent"`
+	Amount       uint64         `json:"amount"`    // Amount of this transfer.
+	KeyImage     string         `json:"key_image"` // Key image for the incoming transfer's unspent output.
+	Spent        bool           `json:"spent"`     // Indicates if this transfer has been spent.
 	SubaddrIndex SubaddrIndices `json:"subaddr_index"`
-	TxHash       string         `json:"tx_hash"`
-	Frozen       bool           `json:"frozen"`
-	Unlocked     bool           `json:"unlocked"`
+	TxHash       string         `json:"tx_hash"`  // Several incoming transfers may share the same hash if they were in the same transaction.
+	Frozen       bool           `json:"frozen"`   // Indicates if the output been frozen by "freeze".
+	Unlocked     bool           `json:"unlocked"` // Indicates if the output is spendable.
 	BlockHeight  uint64         `json:"block_height"`
 	PubKey       string         `json:"pubkey"`
 }
