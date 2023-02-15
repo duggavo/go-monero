@@ -120,3 +120,13 @@ func (c *Client) Transfer(ctx context.Context, params TransferParameters) (*Tran
 
 	return resp, nil
 }
+
+func (c *Client) IncomingTransfers(ctx context.Context, params IncomingTransfersParams) (*IncomingTransfersResult, error) {
+	resp := &IncomingTransfersResult{}
+
+	if err := c.JSONRPC(ctx, "incoming_transfers", nil, resp); err != nil {
+		return nil, fmt.Errorf("jsonrpc: %w", err)
+	}
+
+	return resp, nil
+}

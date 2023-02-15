@@ -156,3 +156,29 @@ type TransferResult struct {
 	TxMetadata    string `json:"tx_metadata"`
 	UnsignedTxset string `json:"unsigned_txset"`
 }
+
+type SubaddrIndices struct {
+	Major uint `json:"major"`
+	Minor uint `json:"minor"`
+}
+type Transfer struct {
+	Amount       uint64         `json:"amount"`
+	KeyImage     string         `json:"key_image"`
+	Spent        bool           `json:"spent"`
+	SubaddrIndex SubaddrIndices `json:"subaddr_index"`
+	TxHash       string         `json:"tx_hash"`
+	Frozen       bool           `json:"frozen"`
+	Unlocked     bool           `json:"unlocked"`
+	BlockHeight  uint64         `json:"block_height"`
+	PubKey       string         `json:"pubkey"`
+}
+
+type IncomingTransfersParams struct {
+	TransferType   string `json:"transfer_type"`
+	AccountIndex   uint   `json:"account_index,omitempty"`
+	SubaddrIndices []uint `json:"subaddr_indices,omitempty"`
+}
+
+type IncomingTransfersResult struct {
+	Transfers []Transfer `json:"transfers"`
+}
