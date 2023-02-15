@@ -110,3 +110,13 @@ func (c *Client) GetHeight(ctx context.Context) (*GetHeightResult, error) {
 
 	return resp, nil
 }
+
+func (c *Client) Transfer(ctx context.Context, params TransferParameters) (*TransferResult, error) {
+	resp := &TransferResult{}
+
+	if err := c.JSONRPC(ctx, "transfer", nil, resp); err != nil {
+		return nil, fmt.Errorf("jsonrpc: %w", err)
+	}
+
+	return resp, nil
+}

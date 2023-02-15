@@ -128,3 +128,31 @@ type AutoRefreshResult struct {
 type GetHeightResult struct {
 	Height uint64 `json:"height"`
 }
+
+type Destination struct {
+	Amount  uint64 `json:"amount"`
+	Address string `json:"address"`
+}
+
+type TransferParameters struct {
+	Destinations   []Destination `json:"destinations"`
+	AccountIndex   uint          `json:"account_index,omitempty"`
+	SubaddrIndices []uint        `json:"subaddr_indices,omitempty"`
+	Priority       uint          `json:"priority,omitempty"`
+	UnlockTime     uint          `json:"unlock_time,omitempty"`
+	GetTxKey       bool          `json:"get_tx_key,omitempty"`
+	DoNotRelay     bool          `json:"do_not_relay,omitempty"`
+	GetTxHex       bool          `json:"get_tx_hex,omitempty"`
+	GetTxMetadata  bool          `json:"get_tx_metadata,omitempty"`
+}
+
+type TransferResult struct {
+	Amount        uint64 `json:"amount"`
+	Fee           uint64 `json:"fee"`
+	MultisigTxset string `json:"multisig_txset"`
+	TxBlob        string `json:"tx_blob"`
+	TxHash        string `json:"tx_hash"`
+	TxKey         string `json:"tx_key"`
+	TxMetadata    string `json:"tx_metadata"`
+	UnsignedTxset string `json:"unsigned_txset"`
+}
