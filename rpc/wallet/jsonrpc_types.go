@@ -33,6 +33,12 @@ type GetAddressResult struct {
 		Used         bool   `json:"used"`
 	} `json:"addresses"`
 }
+type GetAddressIndexResult struct {
+	Index []struct {
+		Major uint `json:"address"`       // account index
+		Minor uint `json:"address_index"` // subaddress index
+	} `json:"addresses"`
+}
 
 type GetBalanceRequestParameters struct {
 	AccountIndex   uint   `json:"account_index"`

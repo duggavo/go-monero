@@ -39,8 +39,20 @@ func (c *Client) GetAddress(
 	return resp, nil
 }
 
-// GetBalance gets the balance of the wallet configured for the wallet rpc
-// server.
+// GetAddressIndex returns the account and index of a given subaddress
+func (c *Client) GetAddressIndex(ctx context.Context, addr string) (*GetAddressIndexResult, error) {
+	resp := &GetAddressIndexResult{}
+
+	if err := c.JSONRPC(ctx, methodGetAddress, map[string]string{
+		"address": addr,
+	}, resp); err != nil {
+		return nil, fmt.Errorf("jsonrpc: %w", err)
+	}
+
+	return resp, nil
+}
+
+// GetBalance gets the balance of the wallet.
 func (c *Client) GetBalance(
 	ctx context.Context, params GetBalanceRequestParameters,
 ) (*GetBalanceResult, error) {
