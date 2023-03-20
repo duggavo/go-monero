@@ -5,22 +5,12 @@ import (
 	"fmt"
 )
 
-const (
-	methodAutoRefresh   = "auto_refresh"
-	methodCreateAddress = "create_address"
-	methodGetAccounts   = "get_accounts"
-	methodGetAddress    = "get_address"
-	methodGetBalance    = "get_balance"
-	methodGetHeight     = "get_height"
-	methodRefresh       = "refresh"
-)
-
 func (c *Client) GetAccounts(
 	ctx context.Context, params GetAccountsRequestParameters,
 ) (*GetAccountsResult, error) {
 	resp := &GetAccountsResult{}
 
-	if err := c.JSONRPC(ctx, methodGetAccounts, params, resp); err != nil {
+	if err := c.JSONRPC(ctx, "get_accounts", params, resp); err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
 
@@ -32,7 +22,7 @@ func (c *Client) GetAddress(
 ) (*GetAddressResult, error) {
 	resp := &GetAddressResult{}
 
-	if err := c.JSONRPC(ctx, methodGetAddress, params, resp); err != nil {
+	if err := c.JSONRPC(ctx, "get_address", params, resp); err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
 
@@ -43,7 +33,7 @@ func (c *Client) GetAddress(
 func (c *Client) GetAddressIndex(ctx context.Context, addr string) (*GetAddressIndexResult, error) {
 	resp := &GetAddressIndexResult{}
 
-	if err := c.JSONRPC(ctx, methodGetAddress, map[string]string{
+	if err := c.JSONRPC(ctx, "get_address_index", map[string]string{
 		"address": addr,
 	}, resp); err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
@@ -58,7 +48,7 @@ func (c *Client) GetBalance(
 ) (*GetBalanceResult, error) {
 	resp := &GetBalanceResult{}
 
-	if err := c.JSONRPC(ctx, methodGetBalance, params, resp); err != nil {
+	if err := c.JSONRPC(ctx, "get_balance", params, resp); err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
 
@@ -75,7 +65,7 @@ func (c *Client) CreateAddress(
 		"label":         label,
 		"count":         count,
 	}
-	if err := c.JSONRPC(ctx, methodCreateAddress, params, resp); err != nil {
+	if err := c.JSONRPC(ctx, "create_address", params, resp); err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
 
@@ -91,7 +81,7 @@ func (c *Client) AutoRefresh(
 		"enable": enable,
 		"period": period,
 	}
-	if err := c.JSONRPC(ctx, methodAutoRefresh, params, resp); err != nil {
+	if err := c.JSONRPC(ctx, "auto_refresh", params, resp); err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
 
@@ -106,7 +96,7 @@ func (c *Client) Refresh(
 	params := map[string]interface{}{
 		"start_height": startHeight,
 	}
-	if err := c.JSONRPC(ctx, methodRefresh, params, resp); err != nil {
+	if err := c.JSONRPC(ctx, "refresh", params, resp); err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
 
@@ -116,7 +106,7 @@ func (c *Client) Refresh(
 func (c *Client) GetHeight(ctx context.Context) (*GetHeightResult, error) {
 	resp := &GetHeightResult{}
 
-	if err := c.JSONRPC(ctx, methodGetHeight, nil, resp); err != nil {
+	if err := c.JSONRPC(ctx, "get_height", nil, resp); err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
 
