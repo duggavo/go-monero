@@ -244,7 +244,6 @@ type GetBlockTemplateResult struct {
 	BlockhashingBlob string `json:"blockhashing_blob"`
 
 	// BlocktemplateBlob is the blob on which to try to mine a new block.
-	//
 	BlocktemplateBlob string `json:"blocktemplate_blob"`
 
 	// Difficulty is the difficulty of the next block.
@@ -252,21 +251,30 @@ type GetBlockTemplateResult struct {
 
 	// ExpectedReward is the coinbase reward expected to be received if the
 	// block is successfully mined.
-	//
 	ExpectedReward int64 `json:"expected_reward"`
 
 	// Height is the height on which to mine.
-	//
 	Height int `json:"height"`
 
 	// PrevHash is the hash of the most recent block on which to mine the
 	// next block.
-	//
 	PrevHash string `json:"prev_hash"`
 
-	// ReservedOffset TODO
-	//
+	// ReservedOffset is the offset of the reserved data on the block
+	// template blob, in bytes.
 	ReservedOffset int `json:"reserved_offset"`
+
+	// SeedHash is the hash of block to use as seed for RandomX
+	SeedHash string `json:"seed_hash"`
+
+	// NextSeedHash is the hash of the next block to use as seed for RandomX
+	NextSeedHash string `json:"next_seed_hash"`
+
+	SeedHeight uint64 `json:"seed_height"`
+
+	// Network difficulty (analogous to the strength of the network) as a
+	// hexadecimal string representing a 128-bit number starting with 0x
+	WideDifficulty string `json:"wide_difficulty"`
 
 	RPCResultFooter `json:",inline"`
 }
