@@ -389,12 +389,12 @@ func (c *Client) SyncInfo(ctx context.Context) (*SyncInfoResult, error) {
 	return resp, nil
 }
 
-func (c *Client) CalcPow(ctx context.Context, params CalcPowParameters) (*CalcPowResult, error) {
-	resp := &CalcPowResult{}
+func (c *Client) CalcPow(ctx context.Context, params CalcPowParameters) (string, error) {
+	var resp string
 
 	err := c.JSONRPC(ctx, methodCalcPow, params, resp)
 	if err != nil {
-		return nil, fmt.Errorf("jsonrpc: %w", err)
+		return "", fmt.Errorf("jsonrpc: %w", err)
 	}
 
 	return resp, nil

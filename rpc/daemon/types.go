@@ -928,10 +928,6 @@ type CalcPowParameters struct {
 	SeedHash     string `json:"seed_hash"`
 }
 
-type CalcPowResult struct {
-	Result string `json:"result"`
-}
-
 type SubmitBlockResult struct {
 	Status string `json:"status"`
 }
