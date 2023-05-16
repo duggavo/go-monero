@@ -922,7 +922,7 @@ type StopMiningResult struct {
 }
 
 type CalcPowParameters struct {
-	MajorVersion string `json:"major_version"`
+	MajorVersion uint   `json:"major_version"`
 	Height       uint64 `json:"height"`
 	BlockBlob    string `json:"block_blob"`
 	SeedHash     string `json:"seed_hash"`
