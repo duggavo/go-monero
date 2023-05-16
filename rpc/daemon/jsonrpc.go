@@ -398,5 +398,15 @@ func (c *Client) CalcPow(ctx context.Context, params CalcPowParameters) (*CalcPo
 	}
 
 	return resp, nil
+}
 
+func (c *Client) SubmitBlock(ctx context.Context, minedBlockBlob string) (*SubmitBlockResult, error) {
+	resp := &SubmitBlockResult{}
+
+	err := c.JSONRPC(ctx, "submit_block", []string{minedBlockBlob}, resp)
+	if err != nil {
+		return nil, fmt.Errorf("jsonrpc: %w", err)
+	}
+
+	return resp, nil
 }

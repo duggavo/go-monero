@@ -931,3 +931,7 @@ type CalcPowParameters struct {
 type CalcPowResult struct {
 	Result string `json:"result"`
 }
+
+type SubmitBlockResult struct {
+	Status string `json:"status"`
+}
