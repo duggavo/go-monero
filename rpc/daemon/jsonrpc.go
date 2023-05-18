@@ -15,7 +15,6 @@ const (
 	methodGetBlockHeadersRange   = "get_block_headers_range"
 	methodGetBlockHeaderByHash   = "get_block_header_by_hash"
 	methodGetBlockHeaderByHeight = "get_block_header_by_height"
-	methodGetBlockTemplate       = "get_block_template"
 	methodGetCoinbaseTxSum       = "get_coinbase_tx_sum"
 	methodGetConnections         = "get_connections"
 	methodGetFeeEstimate         = "get_fee_estimate"
@@ -216,16 +215,10 @@ func (c *Client) RelayTx(
 }
 
 // GetBlockTemplate gets a block template on which mining a new block.
-func (c *Client) GetBlockTemplate(
-	ctx context.Context, walletAddress string, reserveSize uint,
-) (*GetBlockTemplateResult, error) {
+func (c *Client) GetBlockTemplate(ctx context.Context, params GetBlockTemplateParams) (*GetBlockTemplateResult, error) {
 	resp := &GetBlockTemplateResult{}
-	params := map[string]interface{}{
-		"wallet_address": walletAddress,
-		"reserve_size":   reserveSize,
-	}
 
-	err := c.JSONRPC(ctx, methodGetBlockTemplate, params, resp)
+	err := c.JSONRPC(ctx, "get_block_template", params, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}

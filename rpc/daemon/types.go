@@ -236,6 +236,16 @@ type GetInfoResult struct {
 	RPCResultFooter `json:",inline"`
 }
 
+type GetBlockTemplateParams struct {
+	WalletAddress string `json:"wallet_address"`
+
+	// ReserveSize reserves X byte in the block header for the extra nonce.
+	ReserveSize uint `json:"reserve_size,omitempty"`
+
+	// ExtraNonce is the hex string representing the extra nonce.
+	ExtraNonce string `json:"extra_nonce,omitempty"`
+}
+
 // GetBlockTemplateResult is the result of a call to the GetBlockTemplate RPC
 // method.
 type GetBlockTemplateResult struct {
