@@ -6,30 +6,6 @@ import (
 	"fmt"
 )
 
-const (
-	methodGenerateBlocks         = "generateblocks"
-	methodGetAlternateChains     = "get_alternate_chains"
-	methodGetBans                = "get_bans"
-	methodGetBlock               = "get_block"
-	methodGetBlockCount          = "get_block_count"
-	methodGetBlockHeadersRange   = "get_block_headers_range"
-	methodGetBlockHeaderByHash   = "get_block_header_by_hash"
-	methodGetBlockHeaderByHeight = "get_block_header_by_height"
-	methodGetCoinbaseTxSum       = "get_coinbase_tx_sum"
-	methodGetConnections         = "get_connections"
-	methodGetFeeEstimate         = "get_fee_estimate"
-	methodGetInfo                = "get_info"
-	methodGetLastBlockHeader     = "get_last_block_header"
-	methodGetVersion             = "get_version"
-	methodHardForkInfo           = "hard_fork_info"
-	methodOnGetBlockHash         = "on_get_block_hash"
-	methodRPCAccessTracking      = "rpc_access_tracking"
-	methodRelayTx                = "relay_tx"
-	methodSetBans                = "set_bans"
-	methodSyncInfo               = "sync_info"
-	methodCalcPow                = "calc_pow"
-)
-
 // GetAlternateChains displays alternative chains seen by the node.
 //
 // (restricted).
@@ -38,7 +14,7 @@ func (c *Client) GetAlternateChains(
 ) (*GetAlternateChainsResult, error) {
 	resp := &GetAlternateChainsResult{}
 
-	err := c.JSONRPC(ctx, methodGetAlternateChains, nil, resp)
+	err := c.JSONRPC(ctx, "get_alternate_chains", nil, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -55,7 +31,7 @@ func (c *Client) RPCAccessTracking(
 ) (*RPCAccessTrackingResult, error) {
 	resp := &RPCAccessTrackingResult{}
 
-	err := c.JSONRPC(ctx, methodRPCAccessTracking, nil, resp)
+	err := c.JSONRPC(ctx, "rpc_access_tracking", nil, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -69,7 +45,7 @@ func (c *Client) HardForkInfo(
 ) (*HardForkInfoResult, error) {
 	resp := &HardForkInfoResult{}
 
-	err := c.JSONRPC(ctx, methodHardForkInfo, nil, resp)
+	err := c.JSONRPC(ctx, "hard_fork_info", nil, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -83,7 +59,7 @@ func (c *Client) HardForkInfo(
 func (c *Client) GetBans(ctx context.Context) (*GetBansResult, error) {
 	resp := &GetBansResult{}
 
-	err := c.JSONRPC(ctx, methodGetBans, nil, resp)
+	err := c.JSONRPC(ctx, "get_bans", nil, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -109,7 +85,7 @@ func (c *Client) SetBans(
 ) (*SetBansResult, error) {
 	resp := &SetBansResult{}
 
-	err := c.JSONRPC(ctx, methodSetBans, params, resp)
+	err := c.JSONRPC(ctx, "set_bans", params, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -123,7 +99,7 @@ func (c *Client) SetBans(
 func (c *Client) GetVersion(ctx context.Context) (*GetVersionResult, error) {
 	resp := &GetVersionResult{}
 
-	err := c.JSONRPC(ctx, methodGetVersion, nil, resp)
+	err := c.JSONRPC(ctx, "get_version", nil, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -135,20 +111,16 @@ func (c *Client) GetVersion(ctx context.Context) (*GetVersionResult, error) {
 // GenerateBlocks RPC method.
 type GenerateBlocksRequestParameters struct {
 	// AmountOfBlocks is the number of blocks to be generated.
-	//
 	AmountOfBlocks uint64 `json:"amount_of_blocks,omitempty"`
 
 	// WalletAddress is the address of the wallet that will get the rewards
 	// of the coinbase transaction for such the blocks generates.
-	//
 	WalletAddress string `json:"wallet_address,omitempty"`
 
 	// PreviousBlock TODO
-	//
 	PreviousBlock string `json:"prev_block,omitempty"`
 
 	// StartingNonce TODO
-	//
 	StartingNonce uint32 `json:"starting_nonce,omitempty"`
 }
 
@@ -163,7 +135,7 @@ func (c *Client) GenerateBlocks(
 ) (*GenerateBlocksResult, error) {
 	resp := &GenerateBlocksResult{}
 
-	err := c.JSONRPC(ctx, methodGenerateBlocks, params, resp)
+	err := c.JSONRPC(ctx, "generateblocks", params, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -176,7 +148,7 @@ func (c *Client) GetBlockCount(
 ) (*GetBlockCountResult, error) {
 	resp := &GetBlockCountResult{}
 
-	err := c.JSONRPC(ctx, methodGetBlockCount, nil, resp)
+	err := c.JSONRPC(ctx, "get_block_count", nil, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -190,7 +162,7 @@ func (c *Client) OnGetBlockHash(
 	resp := ""
 	params := []uint64{height}
 
-	err := c.JSONRPC(ctx, methodOnGetBlockHash, params, &resp)
+	err := c.JSONRPC(ctx, "on_get_block_hash", params, &resp)
 	if err != nil {
 		return "", fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -206,7 +178,7 @@ func (c *Client) RelayTx(
 		"txids": txns,
 	}
 
-	err := c.JSONRPC(ctx, methodRelayTx, params, resp)
+	err := c.JSONRPC(ctx, "relay_tx", params, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -231,7 +203,7 @@ func (c *Client) GetConnections(
 ) (*GetConnectionsResult, error) {
 	resp := &GetConnectionsResult{}
 
-	err := c.JSONRPC(ctx, methodGetConnections, nil, resp)
+	err := c.JSONRPC(ctx, "get_connections", nil, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -244,7 +216,7 @@ func (c *Client) GetConnections(
 func (c *Client) GetInfo(ctx context.Context) (*GetInfoResult, error) {
 	resp := &GetInfoResult{}
 
-	if err := c.JSONRPC(ctx, methodGetInfo, nil, resp); err != nil {
+	if err := c.JSONRPC(ctx, "get_info", nil, resp); err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
 
@@ -256,7 +228,7 @@ func (c *Client) GetLastBlockHeader(
 ) (*GetLastBlockHeaderResult, error) {
 	resp := &GetLastBlockHeaderResult{}
 
-	err := c.JSONRPC(ctx, methodGetLastBlockHeader, nil, resp)
+	err := c.JSONRPC(ctx, "get_last_block_header", nil, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -273,7 +245,7 @@ func (c *Client) GetCoinbaseTxSum(
 		"count":  count,
 	}
 
-	err := c.JSONRPC(ctx, methodGetCoinbaseTxSum, params, resp)
+	err := c.JSONRPC(ctx, "get_coinbase_tx_sum", params, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -298,7 +270,7 @@ func (c *Client) GetBlockHeadersRange(
 ) (*GetBlockHeadersRangeResult, error) {
 	resp := &GetBlockHeadersRangeResult{}
 
-	err := c.JSONRPC(ctx, methodGetBlockHeadersRange, params, resp)
+	err := c.JSONRPC(ctx, "get_block_headers_range", params, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -316,7 +288,7 @@ func (c *Client) GetBlockHeaderByHeight(
 		"height": height,
 	}
 
-	err := c.JSONRPC(ctx, methodGetBlockHeaderByHeight, params, resp)
+	err := c.JSONRPC(ctx, "get_block_header_by_height", params, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -334,7 +306,7 @@ func (c *Client) GetBlockHeaderByHash(
 		"hashes": hashes,
 	}
 
-	err := c.JSONRPC(ctx, methodGetBlockHeaderByHash, params, resp)
+	err := c.JSONRPC(ctx, "get_block_header_by_hash", params, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -349,7 +321,7 @@ func (c *Client) GetBlock(
 ) (*GetBlockResult, error) {
 	resp := &GetBlockResult{}
 
-	err := c.JSONRPC(ctx, methodGetBlock, params, resp)
+	err := c.JSONRPC(ctx, "get_block", params, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -363,7 +335,7 @@ func (c *Client) GetFeeEstimate(ctx context.Context, graceBlocks uint64) (*GetFe
 		"grace_blocks": graceBlocks,
 	}
 
-	err := c.JSONRPC(ctx, methodGetFeeEstimate, params, resp)
+	err := c.JSONRPC(ctx, "get_fee_estimate", params, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -374,7 +346,7 @@ func (c *Client) GetFeeEstimate(ctx context.Context, graceBlocks uint64) (*GetFe
 func (c *Client) SyncInfo(ctx context.Context) (*SyncInfoResult, error) {
 	resp := &SyncInfoResult{}
 
-	err := c.JSONRPC(ctx, methodSyncInfo, nil, resp)
+	err := c.JSONRPC(ctx, "sync_info", nil, resp)
 	if err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
@@ -385,7 +357,7 @@ func (c *Client) SyncInfo(ctx context.Context) (*SyncInfoResult, error) {
 func (c *Client) CalcPow(ctx context.Context, params CalcPowParameters) (string, error) {
 	var resp string
 
-	err := c.JSONRPC(ctx, methodCalcPow, params, &resp)
+	err := c.JSONRPC(ctx, "calc_pow", params, &resp)
 	if err != nil {
 		return "", fmt.Errorf("jsonrpc: %w", err)
 	}

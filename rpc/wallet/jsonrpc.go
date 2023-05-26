@@ -116,7 +116,18 @@ func (c *Client) GetHeight(ctx context.Context) (*GetHeightResult, error) {
 func (c *Client) Transfer(ctx context.Context, params TransferParameters) (*TransferResult, error) {
 	resp := &TransferResult{}
 
-	if err := c.JSONRPC(ctx, "transfer", nil, resp); err != nil {
+	if err := c.JSONRPC(ctx, "transfer", params, resp); err != nil {
+		return nil, fmt.Errorf("jsonrpc: %w", err)
+	}
+
+	return resp, nil
+}
+
+// Same as Transfer, but can split into more than one tx if necessary
+func (c *Client) TransferSplit(ctx context.Context, params TransferParameters) (*TransferSplitResult, error) {
+	resp := &TransferSplitResult{}
+
+	if err := c.JSONRPC(ctx, "transfer_split", params, resp); err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
 
@@ -126,9 +137,20 @@ func (c *Client) Transfer(ctx context.Context, params TransferParameters) (*Tran
 func (c *Client) IncomingTransfers(ctx context.Context, params IncomingTransfersParams) (*IncomingTransfersResult, error) {
 	resp := &IncomingTransfersResult{}
 
-	if err := c.JSONRPC(ctx, "incoming_transfers", nil, resp); err != nil {
+	if err := c.JSONRPC(ctx, "incoming_transfers", params, resp); err != nil {
 		return nil, fmt.Errorf("jsonrpc: %w", err)
 	}
 
 	return resp, nil
+}
+
+func (c *Client) SweepAll(ctx context.Context, params SweepAllParams) (*SweepAllResult, error) {
+	resp := &SweepAllResult{}
+
+	if err := c.JSONRPC(ctx, "sweep_all", params, resp); err != nil {
+		return nil, fmt.Errorf("jsonrpc: %w", err)
+	}
+
+	return resp, nil
+
 }

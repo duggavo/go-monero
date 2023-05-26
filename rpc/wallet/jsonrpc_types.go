@@ -114,6 +114,17 @@ type TransferResult struct {
 	TxMetadata    string `json:"tx_metadata"`
 	UnsignedTxset string `json:"unsigned_txset"`
 }
+type TransferSplitResult struct {
+	TxHashList     []string `json:"tx_hash_list"`
+	TxKeyList      []string `json:"tx_key_list"`
+	AmountList     []uint64 `json:"amount_list"`
+	FeeList        []uint64 `json:"fee_list"`
+	WeightList     []uint64 `json:"weight_list"`
+	TxBlobList     []string `json:"tx_blob_list"`
+	TxMetadataList []string `json:"tx_metadata_list"`
+	MultisigTxset  string   `json:"multisig_txset"`
+	UnsignedTxset  string   `json:"unsigned_txset"`
+}
 
 type SubaddrIndices struct {
 	Major uint `json:"major"` // Account index for the subaddress.
@@ -139,4 +150,27 @@ type IncomingTransfersParams struct {
 
 type IncomingTransfersResult struct {
 	Transfers []Transfer `json:"transfers"`
+}
+
+type SweepAllParams struct {
+	Address        string `json:"address"`                   // Destination public address.
+	AccountIndex   uint   `json:"account_index"`             // Sweep transactions from this account.
+	SubaddrIndices []uint `json:"subaddr_indices,omitempty"` // Sweep from this set of subaddresses in the account.
+	Priority       uint8  `json:"priority,omitempty"`        // Priority for sending the sweep transfer, partially determines fee.
+	Outputs        uint   `json:"outputs,omitempty"`         // Specify the number of separate outputs that will be created.
+	UnlockTime     uint64 `json:"unlock_time,omitempty"`     // Number of blocks before the coins can be spent.
+	PaymentId      string `json:"payment_id,omitempty"`      // The 16-bytes payment ID encoded as hex.
+	GetTxKeys      bool   `json:"get_tx_keys,omitempty"`     // Return the transaction keys after sending.
+	DoNotRelay     bool   `json:"do_not_relay,omitempty"`    // If true, do not relay this sweep transfer.
+	GetTxHex       bool   `json:"get_tx_hex,omitempty"`      // Return the transaction as hex after sending.
+	GetTxMetadata  bool   `json:"get_tx_metadata,omitempty"` // Return the transaction metadata after sending.
+}
+
+type SweepAllResult struct {
+	TxHashList []string `json:"tx_hash_list"`
+	TxKeyList  []string `json:"tx_key_list"`
+	AmountList []uint64 `json:"amount_list"`
+	FeeList    []uint64 `json:"fee_list"`
+	WeightList []uint64 `json:"weight_list"`
+	TxBlobList []string `json:"tx_blob_list"`
 }
