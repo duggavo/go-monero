@@ -174,3 +174,7 @@ type SweepAllResult struct {
 	WeightList []uint64 `json:"weight_list"`
 	TxBlobList []string `json:"tx_blob_list"`
 }
+
+type RelayTxResult struct {
+	TxHash string `json:"tx_hash"`
+}

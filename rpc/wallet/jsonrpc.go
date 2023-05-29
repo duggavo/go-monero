@@ -152,5 +152,16 @@ func (c *Client) SweepAll(ctx context.Context, params SweepAllParams) (*SweepAll
 	}
 
 	return resp, nil
+}
 
+func (c *Client) RelayTx(ctx context.Context, hex string) (*RelayTxResult, error) {
+	resp := &RelayTxResult{}
+
+	if err := c.JSONRPC(ctx, "relay_tx", map[string]string{
+		"hex": hex,
+	}, resp); err != nil {
+		return nil, fmt.Errorf("jsonrpc: %w", err)
+	}
+
+	return resp, nil
 }
