@@ -329,6 +329,7 @@ func (c *Client) GetBlock(
 	return resp, nil
 }
 
+// GetFeeEstimate gives an estimation on fees per byte.
 func (c *Client) GetFeeEstimate(ctx context.Context, graceBlocks uint64) (*GetFeeEstimateResult, error) {
 	resp := &GetFeeEstimateResult{}
 	params := map[string]uint64{
@@ -343,6 +344,7 @@ func (c *Client) GetFeeEstimate(ctx context.Context, graceBlocks uint64) (*GetFe
 	return resp, nil
 }
 
+// SyncInfo gets synchronisation informations.
 func (c *Client) SyncInfo(ctx context.Context) (*SyncInfoResult, error) {
 	resp := &SyncInfoResult{}
 
@@ -354,6 +356,7 @@ func (c *Client) SyncInfo(ctx context.Context) (*SyncInfoResult, error) {
 	return resp, nil
 }
 
+// CalcPow calculates PoW hash for a block candidate.
 func (c *Client) CalcPow(ctx context.Context, params CalcPowParameters) (string, error) {
 	var resp string
 
@@ -365,6 +368,7 @@ func (c *Client) CalcPow(ctx context.Context, params CalcPowParameters) (string,
 	return resp, nil
 }
 
+// SubmitBlock submits a mined block to the network.
 func (c *Client) SubmitBlock(ctx context.Context, minedBlockBlob string) (*SubmitBlockResult, error) {
 	resp := &SubmitBlockResult{}
 

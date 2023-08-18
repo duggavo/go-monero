@@ -856,5 +856,6 @@ type CalcPowParameters struct {
 }
 
 type SubmitBlockResult struct {
-	Status string `json:"status"`
+	Status  string `json:"status"`
+	BlockId string `json:"block_id"` // Submitted block's hash as a hexadecimal string
 }
