@@ -165,3 +165,11 @@ func (c *Client) RelayTx(ctx context.Context, hex string) (*RelayTxResult, error
 
 	return resp, nil
 }
+
+// Save the wallet file.
+func (c *Client) Store(ctx context.Context) error {
+	if err := c.JSONRPC(ctx, "store", map[string]string{}, &struct{}{}); err != nil {
+		return fmt.Errorf("jsonrpc: %w", err)
+	}
+	return nil
+}
