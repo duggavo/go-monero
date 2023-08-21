@@ -37,7 +37,7 @@ type GetAddressIndexResult struct {
 	Index struct {
 		Major uint `json:"major"` // account index
 		Minor uint `json:"minor"` // subaddress index
-	} `json:"addresses"`
+	} `json:"index"`
 }
 
 type GetBalanceRequestParameters struct {
