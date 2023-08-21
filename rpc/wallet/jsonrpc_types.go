@@ -35,8 +35,8 @@ type GetAddressResult struct {
 }
 type GetAddressIndexResult struct {
 	Index struct {
-		Major uint `json:"address"`       // account index
-		Minor uint `json:"address_index"` // subaddress index
+		Major uint `json:"major"` // account index
+		Minor uint `json:"minor"` // subaddress index
 	} `json:"addresses"`
 }
 
