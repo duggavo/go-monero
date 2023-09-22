@@ -173,3 +173,47 @@ func (c *Client) Store(ctx context.Context) error {
 	}
 	return nil
 }
+
+func (c *Client) CreateWallet(ctx context.Context, params CreateWalletParams) error {
+	if err := c.JSONRPC(ctx, "create_wallet", params, &struct{}{}); err != nil {
+		return fmt.Errorf("jsonrpc: %w", err)
+	}
+
+	return nil
+}
+
+func (c *Client) OpenWallet(ctx context.Context, params OpenWalletParams) error {
+	if err := c.JSONRPC(ctx, "open_wallet", params, &struct{}{}); err != nil {
+		return fmt.Errorf("jsonrpc: %w", err)
+	}
+
+	return nil
+}
+
+func (c *Client) RestoreDeterministicWallet(ctx context.Context, params RestoreDeterministicWalletParams) (*RestoreDeterministicWalletResult, error) {
+	resp := &RestoreDeterministicWalletResult{}
+
+	if err := c.JSONRPC(ctx, "restore_deterministic_wallet", params, resp); err != nil {
+		return nil, fmt.Errorf("jsonrpc: %w", err)
+	}
+
+	return resp, nil
+}
+
+func (c *Client) CloseWallet(ctx context.Context) error {
+	return c.JSONRPC(ctx, "close_wallet", nil, &struct{}{})
+}
+
+func (c *Client) ChangeWalletPassword(ctx context.Context, params ChangeWalletPasswordParams) error {
+	return c.JSONRPC(ctx, "change_wallet_password", params, &struct{}{})
+}
+
+func (c *Client) IsMultisig(ctx context.Context) (*IsMultisigResult, error) {
+	resp := &IsMultisigResult{}
+
+	if err := c.JSONRPC(ctx, "is_multisig", nil, resp); err != nil {
+		return nil, fmt.Errorf("jsonrpc: %w", err)
+	}
+
+	return resp, nil
+}

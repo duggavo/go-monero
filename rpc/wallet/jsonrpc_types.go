@@ -178,3 +178,43 @@ type SweepAllResult struct {
 type RelayTxResult struct {
 	TxHash string `json:"tx_hash"`
 }
+
+type CreateWalletParams struct {
+	Filename string `json:"filename"`
+	Password string `json:"password"`
+	Language string `json:"language"`
+}
+
+type OpenWalletParams struct {
+	Filename string `json:"filename"`
+	Password string `json:"password"`
+}
+
+type RestoreDeterministicWalletParams struct {
+	Filename        string `json:"filename"`                   // Name of the wallet.
+	Password        string `json:"password"`                   // Password of the wallet.
+	Seed            string `json:"seed"`                       // Mnemonic phrase of the wallet to restore.
+	RestoreHeight   uint64 `json:"restore_height,omitempty"`   // Block height to restore the wallet from (default = 0).
+	Language        string `json:"language,omitempty"`         // Language of the mnemonic phrase in case the old language is invalid.
+	SeedOffset      string `json:"seed_offset,omitempty"`      // Offset used to derive a new seed from the given mnemonic to recover a secret wallet from the mnemonic phrase.
+	AutosaveCurrent bool   `json:"autosave_current,omitempty"` // Whether to save the currently open RPC wallet before closing it (defaults to true).
+}
+
+type RestoreDeterministicWalletResult struct {
+	Address       string `json:"address"`
+	Info          string `json:"info"`           // Message describing the success or failure of the attempt to restore the wallet.
+	Seed          string `json:"seed"`           // Mnemonic phrase of the restored wallet, which is updated if the wallet was restored from a deprecated-style mnemonic phrase.
+	WasDeprecated bool   `json:"was_deprecated"` // Indicates if the restored wallet was created from a deprecated mnemonic phrase.
+}
+
+type ChangeWalletPasswordParams struct {
+	OldPassword string `json:"old_password"`
+	NewPassword string `json:"new_password"`
+}
+
+type IsMultisigResult struct {
+	Multisig  bool `json:"multisig"`
+	Ready     bool `json:"ready"`
+	Threshold uint `json:"threshold"`
+	Total     uint `json:"total"`
+}
