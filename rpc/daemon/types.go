@@ -715,17 +715,24 @@ type TransactionJSON struct {
 			KeyOffsets []uint `json:"key_offsets"`
 			KImage     string `json:"k_image"`
 		} `json:"key"`
+		Gen struct {
+			Height uint64 `json:"height"`
+		} `json:"gen"`
 	} `json:"vin"`
 	Vout []struct {
 		Amount uint64 `json:"amount"`
 		Target struct {
-			Key string `json:"key"`
+			Key       string `json:"key"`
+			TaggedKey struct {
+				Key     string `json:"key"`
+				ViewTag string `json:"view_tag"`
+			} `json:"tagged_key"`
 		} `json:"target"`
 	} `json:"vout"`
 	Extra         []byte `json:"extra"`
 	RctSignatures struct {
 		Type     int    `json:"type"`
-		Txnfee   uint64 `json:"txnFee"`
+		TxnFee   uint64 `json:"txnFee"`
 		Ecdhinfo []struct {
 			Amount string `json:"amount"`
 		} `json:"ecdhInfo"`
@@ -746,12 +753,22 @@ type TransactionJSON struct {
 			B      string   `json:"b"`
 			T      string   `json:"t"`
 		} `json:"bp"`
+		Bpp []struct {
+			A  string   `json:"A"`
+			A1 string   `json:"A1"`
+			B  string   `json:"B"`
+			R1 string   `json:"r1"`
+			S1 string   `json:"s1"`
+			D1 string   `json:"d1"`
+			L  []string `json:"L"`
+			R  []string `json:"R"`
+		} `json:"bpp"`
 		Clsags []struct {
 			S  []string `json:"s"`
 			C1 string   `json:"c1"`
 			D  string   `json:"D"`
 		} `json:"CLSAGs"`
-		Pseudoouts []string `json:"pseudoOuts"`
+		PseudoOuts []string `json:"pseudoOuts"`
 	} `json:"rctsig_prunable"`
 }
 
