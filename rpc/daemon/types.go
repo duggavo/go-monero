@@ -882,7 +882,7 @@ type GetMinerDataResult struct {
 	Height                uint64 `json:"height"`
 	PrevId                string `json:"prev_id"`
 	SeedHash              string `json:"seed_hash"`
-	Difficulty            uint64 `json:"difficulty"`
+	Difficulty            string `json:"difficulty"`
 	MedianWeight          uint64 `json:"median_weight"`
 	AlreadyGeneratedCoins uint64 `json:"already_generated_coins"`
 	Untrusted             bool   `json:"untrusted"`
