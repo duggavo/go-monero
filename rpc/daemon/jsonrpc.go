@@ -379,3 +379,14 @@ func (c *Client) SubmitBlock(ctx context.Context, minedBlockBlob string) (*Submi
 
 	return resp, nil
 }
+
+func (c *Client) GetMinerData(ctx context.Context) (*GetMinerDataResult, error) {
+	resp := &GetMinerDataResult{}
+
+	err := c.JSONRPC(ctx, "get_miner_data", nil, resp)
+	if err != nil {
+		return nil, fmt.Errorf("jsonrpc: %w", err)
+	}
+
+	return resp, nil
+}

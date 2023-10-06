@@ -876,3 +876,14 @@ type SubmitBlockResult struct {
 	Status  string `json:"status"`
 	BlockId string `json:"block_id"` // Submitted block's hash as a hexadecimal string
 }
+
+type GetMinerDataResult struct {
+	MajorVersion          uint   `json:"major_version"`
+	Height                uint64 `json:"height"`
+	PrevId                string `json:"prev_id"`
+	SeedHash              string `json:"seed_hash"`
+	Difficulty            uint64 `json:"difficulty"`
+	MedianWeight          uint64 `json:"median_weight"`
+	AlreadyGeneratedCoins uint64 `json:"already_generated_coins"`
+	Untrusted             bool   `json:"untrusted"`
+}
