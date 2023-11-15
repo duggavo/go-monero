@@ -228,7 +228,7 @@ type TransferInfo struct {
 	Fee                             uint64           `json:"fee"`
 	Height                          uint64           `json:"height"`
 	Note                            string           `json:"note"`
-	Destinations                    []string         `json:"destinations"`
+	Destinations                    []Destination    `json:"destinations"`
 	PaymentId                       string           `json:"payment_id"`
 	SubaddrIndex                    SubaddrIndices   `json:"subaddress_index"`
 	SubaddrIndices                  []SubaddrIndices `json:"subaddr_indices"`
