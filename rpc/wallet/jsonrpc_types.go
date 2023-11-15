@@ -218,3 +218,48 @@ type IsMultisigResult struct {
 	Threshold uint `json:"threshold"`
 	Total     uint `json:"total"`
 }
+
+type TransferInfo struct {
+	Address                         string           `json:"address"`
+	Amount                          uint64           `json:"amount"`
+	Amounts                         []uint64         `json:"amounts"`
+	Confirmations                   uint64           `json:"confirmations"`
+	DoubleSpendSeen                 bool             `json:"double_spend_seen"`
+	Fee                             uint64           `json:"fee"`
+	Height                          uint64           `json:"height"`
+	Note                            string           `json:"note"`
+	Destinations                    []string         `json:"destinations"`
+	PaymentId                       string           `json:"payment_id"`
+	SubaddrIndex                    SubaddrIndices   `json:"subaddress_index"`
+	SubaddrIndices                  []SubaddrIndices `json:"subaddr_indices"`
+	SuggestedConfirmationsThreshold uint64           `json:"suggested_confirmations_threshold"`
+	Timestamp                       uint64           `json:"timestamp"`
+	Txid                            string           `json:"txid"`
+	Type                            string           `json:"type"`
+	UnlockTime                      uint64           `json:"unlock_time"`
+	Locked                          bool             `json:"locked"`
+}
+
+type GetTransfersParams struct {
+	In      bool `json:"in,omitempty"`      // Include incoming transfers.
+	Out     bool `json:"out,omitempty"`     // Include outgoing transfers.
+	Pending bool `json:"pending,omitempty"` // Include pending transfers.
+	Failed  bool `json:"failed,omitempty"`  // Include failed transfers.
+	Pool    bool `json:"pool,omitempty"`    // Include transfers from the daemon's transaction pool.
+
+	FilterByHeight bool   `json:"filter_by_height,omitempty"`
+	MinHeight      uint64 `json:"min_height,omitempty"` // Minimum block height to scan for transfers, if filtering by height is enabled.
+	MaxHeight      uint64 `json:"max_height,omitempty"` // Maximum block height to scan for transfers, if filtering by height is enabled (defaults to max block height).
+
+	AccountIndex   uint   `json:"account_index,omitempty"`   // Index of the account to query for transfers. (defaults to 0)
+	SubaddrIndices []uint `json:"subaddr_indices,omitempty"` // Defaults to empty - all indices
+	AllAccounts    bool   `json:"all_accounts,omitempty"`    // Defaults to false
+}
+
+type GetTransfersResult struct {
+	In      []TransferInfo
+	Out     []TransferInfo
+	Pending []TransferInfo
+	Failed  []TransferInfo
+	Pool    []TransferInfo
+}

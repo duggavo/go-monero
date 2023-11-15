@@ -217,3 +217,13 @@ func (c *Client) IsMultisig(ctx context.Context) (*IsMultisigResult, error) {
 
 	return resp, nil
 }
+
+func (c *Client) GetTransfers(ctx context.Context, params GetTransfersParams) (*GetTransfersResult, error) {
+	resp := &GetTransfersResult{}
+
+	if err := c.JSONRPC(ctx, "get_transfers", params, resp); err != nil {
+		return nil, fmt.Errorf("jsonrpc: %w", err)
+	}
+
+	return resp, nil
+}
